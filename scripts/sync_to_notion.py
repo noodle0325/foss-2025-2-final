@@ -23,13 +23,21 @@ def create_page(title, content):
                 "object": "block",
                 "type": "paragraph",
                 "paragraph": {
-                    "text": [{"type": "text", "text": {"content": content[:2000]}}]
+                    "rich_text": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": content[:2000]
+                            }
+                        }
+                    ]
                 }
             }
         ]
     }
     response = requests.post(url, headers=headers, json=data)
-    print(response.status_code, response.text)
+    print("📡 상태코드:", response.status_code)
+    print("📝 응답 내용:", response.text)
 
 if __name__ == "__main__":
     with open("docs/기능정리.md", "r", encoding="utf-8") as f:
