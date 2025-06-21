@@ -1,0 +1,27 @@
+name: Sync Docs to Notion
+
+on:
+  push:
+    paths:
+      - 'docs/**'           # glob 패턴으로 한글 문제 회피
+  workflow_dispatch:         # 수동 실행도 허용
+
+jobs:
+  sync-to-notion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Notion Sync
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: python scripts/sync_to_notion.py
