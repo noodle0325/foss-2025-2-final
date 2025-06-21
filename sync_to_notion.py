@@ -29,7 +29,10 @@ def create_page(title, content):
         ]
     }
     response = requests.post(url, headers=headers, json=data)
-    print(response.status_code, response.text)
+    if response.status_code == 200:
+        print("페이지 생성 성공")
+    else:
+        print("실패:", response.status_code, response.text)
 
 if __name__ == "__main__":
     with open("docs/기능정리.md", "r", encoding="utf-8") as f:
